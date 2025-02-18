@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+**/gen-docs/*.doc
+**/gen-docs/*.docx
+**/gen-docs/*.pdf
+**/gen-docs/*.ppt
+
+
+application-mu.yml

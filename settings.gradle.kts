@@ -29,4 +29,4 @@ pluginManagement {
 
 rootProject.name = "db-docs"
 
-include("db-docs-api","db-docs-dao","db-docs-service")
+include("db-docs-api", "db-docs-dao", "db-docs-service", "db-docs-base")

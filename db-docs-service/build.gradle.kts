@@ -1,28 +1,10 @@
-plugins {
-    java
-    id("org.springframework.boot") version "3.4.2"
-    id("io.spring.dependency-management") version "1.1.7"
-}
-
-group = "com.zzz.dbdocs"
-version = "0.0.1-SNAPSHOT"
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
+    api(project(":db-docs-dao"))
+    api(project(":db-docs-api"))
+    implementation(libs.freemarker)
+    implementation(libs.dmDriver)
+    implementation(libs.mysqlDriver)
     implementation("org.springframework.boot:spring-boot-starter")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
 }

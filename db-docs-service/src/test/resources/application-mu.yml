@@ -1,0 +1,28 @@
+db-docs:
+  template:
+    name: dbDoc.ftl
+  data-source-map:
+    "dm-test-1" :
+      db-type: "dm"
+      driver-class-name: dm.jdbc.driver.DmDriver
+      # 数据库地址及端口号
+      url: jdbc:dm://xxx:xx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+      # 数据库用户名
+      username: xx
+      # 数据库密码
+      password: xx
+    "dm-test-2":
+      db-type: "dm"
+      driver-class-name: dm.jdbc.driver.DmDriver
+      # 数据库地址及端口号
+      url: jdbc:dm://xxx:xx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+      # 数据库用户名
+      username: xxx
+      # 数据库密码
+      password: xxx
+    "mysql-test" :
+      db-type: "mysql"
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://xxx:xx/xxx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+      username: xx
+      password: xx

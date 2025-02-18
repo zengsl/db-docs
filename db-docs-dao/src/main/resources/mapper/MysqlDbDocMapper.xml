@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzz.dbdocs.dao.mapper.MysqlDocsMapper">
+
+    <select id="queryAllTablesBaseInfo" resultType="com.zzz.dbdocs.base.model.po.TableBaseInfoPO">
+        SELECT
+            TABLE_NAME AS tableName,
+            TABLE_COMMENT AS tableComment
+        FROM
+            information_schema.TABLES
+        WHERE
+            TABLE_TYPE = 'BASE TABLE'
+          AND TABLE_SCHEMA = DATABASE()
+    </select>
+
+    <select id="queryTableBaseInfoByUser" resultType="com.zzz.dbdocs.base.model.po.TableBaseInfoPO">
+        SELECT
+        TABLE_NAME AS tableName,
+        TABLE_COMMENT AS tableComment
+        FROM
+        information_schema.TABLES
+        WHERE
+        TABLE_TYPE = 'BASE TABLE'
+        AND TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME = #{tableName}
+    </select>
+
+    <select id="queryTableAllFieldByTableName" resultType="com.zzz.dbdocs.base.model.po.TableColumnInfoPO">
+        select
+            c.TABLE_NAME     AS tableName,
+            c.COLUMN_NAME    AS columnName,
+            c.COLUMN_COMMENT AS comments,
+            c.DATA_TYPE      AS dataType,
+            CASE
+                WHEN c.CHARACTER_MAXIMUM_LENGTH IS NOT NULL THEN c.CHARACTER_MAXIMUM_LENGTH
+                ELSE c.NUMERIC_PRECISION
+                END          AS dataLength,
+            CASE
+                WHEN c.IS_NULLABLE = 'YES' THEN 'Y'
+                ELSE 'N'
+                END          AS nullable,
+            c.COLUMN_DEFAULT AS dataDefault,
+            CASE
+                WHEN t3.CONSTRAINT_TYPE = 'PRIMARY KEY' THEN 'PRI'
+                END          AS keyType
+        from information_schema.TABLES t
+                 left join information_schema.COLUMNS c
+                           on c.TABLE_SCHEMA = t.TABLE_SCHEMA
+                               and c.TABLE_NAME = t.TABLE_NAME
+                               and c.TABLE_CATALOG = t.TABLE_CATALOG
+                 LEFT JOIN
+             (SELECT KCU.COLUMN_NAME,
+                     KCU.TABLE_NAME,
+                     KCU.TABLE_CATALOG,
+                     TC.CONSTRAINT_TYPE
+              FROM information_schema.KEY_COLUMN_USAGE KCU
+                       INNER JOIN
+                   information_schema.TABLE_CONSTRAINTS TC
+                   ON KCU.CONSTRAINT_NAME = TC.CONSTRAINT_NAME AND KCU.TABLE_SCHEMA = TC.TABLE_SCHEMA AND KCU.TABLE_NAME = TC.TABLE_NAME
+              WHERE TC.CONSTRAINT_TYPE = 'PRIMARY KEY') t3
+             ON
+                 c.TABLE_NAME = t3.TABLE_NAME AND c.COLUMN_NAME = t3.COLUMN_NAME and c.TABLE_CATALOG = t3.TABLE_CATALOG
+        where t.TABLE_TYPE = 'BASE TABLE'
+          AND t.TABLE_SCHEMA = DATABASE()
+          and t.TABLE_NAME  = #{tableName}
+    </select>
+</mapper>
