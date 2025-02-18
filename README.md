@@ -95,6 +95,11 @@ dbDoc.docx 转 dbDoc.ftl
 - 实现`DbDocsService`
 - `DbType`增加新类型
 
+## TODO
+
+- [ ] Web界面
+- [ ] 支持Oracle
+- [ ] 补充UT
 
 ## 参考
 
